@@ -8,6 +8,7 @@ var db = firebase.firestore();
 
 
 function storeData() {
+  var w = 0;
   var companyOption = [];
   var brandOption = [];
   var productOption = [];
@@ -31,7 +32,8 @@ function storeData() {
       var packaging = doc.get("Packaging");
       var transportation = doc.get("Transportation");
       var total = doc.get("Total");
-      dataArray.push(companyName + "," + brandName + "," + productName + "," + production + "," + packaging + "," + transportation + "," + total);
+      dataArray.push(companyName + "," + brandName + "," + productName + "," + production + "," + packaging + "," + transportation + "," + total + "," + w);
+      w++;
       console.log(dataArray);
     });
     companyOption.sort();
@@ -122,7 +124,7 @@ function addProductOption(array) {
     productID.appendChild(opt);
   }
 }
-var w = 0;
+
 function createTable(array) {
 
 var all = [];
@@ -149,6 +151,7 @@ var all = [];
     var valuePackaging = split[4];
     var valueTransportation = split[5];
     var valueTotal = split[6];
+    var valueImage = split[7];
     for (var j = 0; j < 3; j++) {
 
       var td = tr.insertCell();
@@ -168,9 +171,9 @@ var all = [];
     b.id = productName;
     b.classList.add("productClass");
     b.title = "my title text";
-    b.href = "product.html?name="+productName+"%20valueProduction="+valueProduction + "%20valuePackaging=" + valuePackaging + "%20valueTransportation=" + valueTransportation + "%20valueTotal=" + valueTotal;
+    b.href = "product.html?name="+productName+"%20valueProduction="+valueProduction + "%20valuePackaging=" + valuePackaging + "%20valueTransportation=" + valueTransportation + "%20valueTotal=" + valueTotal + "%20valueImage=" + valueImage;
     td.appendChild(b);
-    w++;
+
   }
   section.appendChild(tbl);
 }
