@@ -27,7 +27,12 @@ function storeData() {
       if (!productOption.includes(productName)) {
         productOption.push(productName);
       }
-      dataArray.push(companyName + "," + brandName + "," + productName);
+      var production = doc.get("Production");
+      var packaging = doc.get("Packaging");
+      var transportation = doc.get("Transportation");
+      var total = doc.get("Total");
+      dataArray.push(companyName + "," + brandName + "," + productName + "," + production + "," + packaging + "," + transportation + "," + total);
+      console.log(dataArray);
     });
     companyOption.sort();
     brandOption.sort();
@@ -117,7 +122,7 @@ function addProductOption(array) {
     productID.appendChild(opt);
   }
 }
-
+var w = 0;
 function createTable(array) {
 
 var all = [];
@@ -139,26 +144,38 @@ var all = [];
     var tr = tbl.insertRow();
     var split = array[i].split(",")
     console.log(split);
-    var word = split[2];
+    var productName = split[2];
+    var valueProduction = split[3];
+    var valuePackaging = split[4];
+    var valueTransportation = split[5];
+    var valueTotal = split[6];
     for (var j = 0; j < 3; j++) {
 
       var td = tr.insertCell();
 
       td.appendChild(document.createTextNode(split[j]));
+      all.push(split[j]);
+    }
+    for (var j = 3; j < 7; j++){
+      all.push(split[j]);
     }
 
     var td = tr.insertCell();
-    var a = document.createElement('a');
+    var b = document.createElement('a');
     var linkText = document.createTextNode("See Carbon Footprint");
-    a.appendChild(linkText);
-    a.title = "my title text";
-    a.href = "product.html";
-    td.appendChild(a);
-
+    b.appendChild(linkText);
+    productName = productName.replace(/\s+/g, '-');
+    b.id = productName;
+    b.classList.add("productClass");
+    b.title = "my title text";
+    b.href = "product.html?name="+productName+"%20valueProduction="+valueProduction + "%20valuePackaging=" + valuePackaging + "%20valueTransportation=" + valueTransportation + "%20valueTotal=" + valueTotal;
+    td.appendChild(b);
+    w++;
   }
-
   section.appendChild(tbl);
 }
+
+
 
 
 
